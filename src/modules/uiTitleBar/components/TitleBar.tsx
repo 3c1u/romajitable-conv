@@ -11,6 +11,7 @@ const isTauri = '__TAURI__' in window
 
 export const TitleBar = () => {
   const [isMaximized, setIsMaximized] = useState(false)
+  const [isInactive, setIsInactive] = useState(false)
 
   const handleClose = useCallback(() => {
     appWindow.close()
@@ -32,14 +33,21 @@ export const TitleBar = () => {
       return
     }
 
-    const unsubscribe = appWindow.onResized(() => {
+    const unsubscribeResize = appWindow.onResized(() => {
       appWindow.isMaximized().then(setIsMaximized)
     })
+    const unsubscribeInactive = appWindow.onFocusChanged(
+      ({ payload: focused }) => {
+        setIsInactive(!focused)
+      },
+    )
 
     appWindow.isMaximized().then(setIsMaximized)
 
     return () => {
-      unsubscribe.then(unsubscribe => unsubscribe())
+      Promise.all([unsubscribeResize, unsubscribeInactive]).then(u => {
+        u.forEach(unsubscribe => unsubscribe())
+      })
     }
   }, [])
 
@@ -57,20 +65,29 @@ export const TitleBar = () => {
           src="/dodoco.webp"
           width="16"
           height="16"
-          className="object-fit shrink-0 w-4 h-4 block"
+          className={`}object-fit shrink-0 w-4 h-4 block ${
+            isInactive ? 'opacity-40' : 'opacity-100'
+          }`}
           onDoubleClick={e => {
             e.stopPropagation()
             handleClose()
           }}
         />
-        <span data-tauri-drag-region className="line-clamp-1">
+        <span
+          data-tauri-drag-region
+          className={`line-clamp-1 ${
+            isInactive ? 'text-white/40' : 'text-white'
+          }`}
+        >
           Romaji Table Converter
         </span>
       </div>
       <div data-tauri-drag-region className="flex-1" />
       <div className="flex">
         <button
-          className="flex items-center justify-center px-4 py-2 fill-white hover:bg-white/20 transition focus:outline-none"
+          className={`flex items-center justify-center px-4 py-2 ${
+            isInactive ? 'text-white/40' : 'text-white'
+          } hover:bg-white/20 transition focus:outline-none`}
           onClick={handleMinimize}
         >
           {
@@ -92,7 +109,9 @@ export const TitleBar = () => {
           </svg>
         </button>
         <button
-          className="flex items-center justify-center px-4 py-2 fill-white hover:bg-white/20 transition focus:outline-none"
+          className={`flex items-center justify-center px-4 py-2 ${
+            isInactive ? 'text-white/40' : 'text-white'
+          } hover:bg-white/20 transition focus:outline-none`}
           onClick={handleMaximize}
         >
           {' '}
@@ -109,7 +128,9 @@ export const TitleBar = () => {
           )}
         </button>
         <button
-          className="flex items-center justify-center px-4 py-2 hover:bg-red-600 fill-white transition focus:outline-none"
+          className={`flex items-center justify-center px-4 py-2 hover:bg-red-600 ${
+            isInactive ? 'text-white/40' : 'text-white'
+          } transition focus:outline-none`}
           onClick={handleClose}
         >
           <DismissFilled aria-label="Close the window" className="w-4 h-4" />
