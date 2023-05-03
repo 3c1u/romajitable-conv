@@ -1,7 +1,5 @@
-# Tauri + React + Typescript
+# romajitable-conv
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+![Screenshot](assets/scr01.png)
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+ATOK/MS-IMEのローマ字テーブルを変換するツール。
