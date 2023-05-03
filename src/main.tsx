@@ -9,6 +9,10 @@ const customDarkTheme: Theme = {
     "system-ui, 'Segoe UI', 'Segoe UI Web (West European)', 'Yu Gothic UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif",
 }
 
+if (import.meta.env.DEV === false) {
+  document.addEventListener('contextmenu', e => e.preventDefault())
+}
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <FluentProvider theme={customDarkTheme}>
     <App />
