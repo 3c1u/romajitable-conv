@@ -63,7 +63,9 @@ export const TitleBar = () => {
             handleClose()
           }}
         />
-        <span data-tauri-drag-region>Romaji Table Converter</span>
+        <span data-tauri-drag-region className="line-clamp-1">
+          Romaji Table Converter
+        </span>
       </div>
       <div data-tauri-drag-region className="flex-1" />
       <div className="flex">
