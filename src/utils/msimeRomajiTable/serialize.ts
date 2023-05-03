@@ -1,12 +1,13 @@
 import iconv from 'iconv-lite'
 import { RomajiTable } from '~/schema/romajiTable'
-
-const convertCRLF = (str: string) => str.replaceAll('\n', '\r\n')
+import { convertCRLF } from '~/utils/convertCRLF'
 
 export const serializeRomajiTableAsMsImeFormat = (romajiTable: RomajiTable) => {
   let res = 'Windows Registry Editor Version 5.00\n\n'
 
-  res += `[HKEY_CURRENT_USER\\Software\\Microsoft\\IME\\15.0\\IMEJP\\RomaDef\\${romajiTable.name}]\n`
+  res += `[HKEY_CURRENT_USER\\Software\\Microsoft\\IME\\15.0\\IMEJP\\RomaDef\\${
+    romajiTable.semanticName ?? romajiTable.name
+  }]\n`
   res += '"table"=hex:\\\n'
 
   for (const [romaji, kana] of romajiTable.entries) {

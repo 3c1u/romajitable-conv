@@ -10,18 +10,17 @@ import {
   Tooltip,
 } from '@fluentui/react-components'
 import {
-  AddRegular,
   ArrowExportUpFilled,
   ArrowImportRegular,
-  DeleteRegular,
+  TagRegular,
 } from '@fluentui/react-icons'
 import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { loadRomajiTableFromFile } from '~/modules/document/actions/loadRomajiTable'
+import { saveRomajiTableAsAtokFormat } from '~/modules/document/actions/saveRomajiTableAsAtokFormat'
 import { saveRomajiTableAsMsImeFormat } from '~/modules/document/actions/saveRomajiTableAsMsImeFormat'
 import { RegisterActionDialog } from '~/modules/document/components/RegisterActionDialog'
 import { documentAtom } from '~/modules/document/stores'
-import { message } from '~/utils/dialog'
 
 export const AppActions = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,6 +29,14 @@ export const AppActions = () => {
   return (
     <>
       <Toolbar>
+        <Tooltip content="名称を変更" relationship="label" positioning="below">
+          <ToolbarButton
+            onClick={() => setIsOpen(true)}
+            aria-label="追加"
+            icon={<TagRegular />}
+            disabled={!document}
+          />
+        </Tooltip>
         {/* TODO: 未実装
           <Tooltip content="変換を追加" relationship="label" positioning="below">
             <ToolbarButton aria-label="追加" icon={<AddRegular />} />
@@ -71,9 +78,7 @@ export const AppActions = () => {
                 content="MS-IME用にローマ字テーブルを登録します。"
                 relationship="description"
               >
-                <MenuItem onClick={() => setIsOpen(true)}>
-                  レジストリに登録
-                </MenuItem>
+                <MenuItem disabled>レジストリに登録</MenuItem>
               </Tooltip>
               <MenuItem
                 onClick={() => {
@@ -86,7 +91,17 @@ export const AppActions = () => {
               >
                 .regとして書き出し...
               </MenuItem>
-              <MenuItem>ATOK用テーブルとして書き出し...</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  if (!document) {
+                    return
+                  }
+
+                  saveRomajiTableAsAtokFormat(document.data)
+                }}
+              >
+                ATOK用テーブルとして書き出し...
+              </MenuItem>
             </MenuList>
           </MenuPopover>
         </Menu>
@@ -95,7 +110,6 @@ export const AppActions = () => {
         isOpen={isOpen}
         onCancel={() => setIsOpen(false)}
         onRegister={() => {
-          message('TODO')
           setIsOpen(false)
         }}
       />

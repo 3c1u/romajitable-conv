@@ -27,6 +27,8 @@ export const parseAtokRomajiTable = (raw: Uint8Array): RomajiTable => {
   const styleName = styleNameValues.join('=')
   const styleFile = styleFileValues.join('=')
 
+  const styleSemanticName = styleFile.split('\\').at(-1)
+
   if (lines[3] !== 'ローマ字設定=') {
     throw new Error('Invalid format; romaji setting is missing')
   }
@@ -36,6 +38,7 @@ export const parseAtokRomajiTable = (raw: Uint8Array): RomajiTable => {
   return {
     name: styleName,
     path: styleFile,
+    semanticName: styleSemanticName,
     entries: romajiTable.map(line => {
       const [, romajiZk, hiragana] =
         line.match(/^([^\s]+)\s+([^\s]+)\s*$/) ?? []
