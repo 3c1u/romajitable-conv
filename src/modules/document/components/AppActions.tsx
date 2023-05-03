@@ -12,6 +12,7 @@ import {
 import {
   ArrowExportUpFilled,
   ArrowImportRegular,
+  DeleteRegular,
   TagRegular,
 } from '@fluentui/react-icons'
 import { useAtom } from 'jotai'
@@ -34,6 +35,16 @@ export const AppActions = () => {
             onClick={() => setIsOpen(true)}
             aria-label="追加"
             icon={<TagRegular />}
+            disabled={!document}
+          />
+        </Tooltip>
+        <Tooltip content="クリア" relationship="label" positioning="below">
+          <ToolbarButton
+            aria-label="クリア"
+            icon={<DeleteRegular />}
+            onClick={() => {
+              setDocument(null)
+            }}
             disabled={!document}
           />
         </Tooltip>
