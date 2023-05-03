@@ -1,14 +1,13 @@
 import { useAtomValue } from 'jotai'
 import { Text, tokens } from '@fluentui/react-components'
 import DataGrid from 'react-data-grid'
-import { TextEditor } from '~/utils/textEditor/TextEditor'
 import { documentAtom } from '~/modules/document/stores'
 
 import 'react-data-grid/lib/styles.css'
 
 const columns = [
-  { key: 'romaji', name: 'ローマ字', editor: TextEditor },
-  { key: 'kana', name: 'かな', editor: TextEditor },
+  { key: 'romaji', name: 'ローマ字' },
+  { key: 'kana', name: 'かな' },
 ]
 
 export const RomajiTableDataGrid = () => {
