@@ -33,7 +33,7 @@
     },
     "bundle": {
       "active": true,
-      "identifier": "com.tauri.dev",
+      "identifier": "com.tohkani.romajitable-conv",
       "targets": "all"
     },
     "security": {
