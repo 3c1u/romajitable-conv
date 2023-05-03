@@ -1,8 +1,18 @@
+import { Atom } from 'jotai'
+import { documentAtom } from '~/modules/document/stores'
 import { parseAtokRomajiTable } from '~/utils/atokRomajiTable'
 import { dialog } from '~/vendor/tauri/dialog'
 import { fs } from '~/vendor/tauri/fs'
 
-export const loadRomajiTableFromFile = async () => {
+type StoreValue<T> = T extends Atom<infer U> ? U : never
+
+interface LoadRomajiTableFromFileParams {
+  setDocument: (document: StoreValue<typeof documentAtom>) => void
+}
+
+export const loadRomajiTableFromFile = async ({
+  setDocument,
+}: LoadRomajiTableFromFileParams) => {
   const res = await dialog?.open({
     title: 'ローマ字テーブルを読み込む...',
     filters: [
@@ -45,13 +55,17 @@ export const loadRomajiTableFromFile = async () => {
     // ATOK形式としてパースしてみる
     try {
       const resAtok = parseAtokRomajiTable(res)
-      console.log(
-        'loadRomajiTableFromFile: parseAtokRomajiTable() succeeded',
-        resAtok,
-      )
+      setDocument({
+        name: resAtok.name,
+        isDirty: false,
+        data: resAtok,
+      })
     } catch (e: unknown) {
       // TODO: support Mozc format
-      console.log('failed to parse as ATOK format; falling back to Mozc format', e)
+      console.log(
+        'failed to parse as ATOK format; falling back to Mozc format',
+        e,
+      )
       throw e
     }
   } catch (e: unknown) {

@@ -17,13 +17,16 @@ import {
   ArrowImportRegular,
   DeleteRegular,
 } from '@fluentui/react-icons'
+import { useSetAtom } from 'jotai'
 import { useState } from 'react'
 import { loadRomajiTableFromFile } from '~/modules/document/actions/loadRomajiTable'
 import { RegisterActionDialog } from '~/modules/document/components/RegisterActionDialog'
+import { documentAtom } from '~/modules/document/stores'
 import { message } from '~/utils/dialog'
 
 export const AppActions = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const setDocument = useSetAtom(documentAtom)
 
   return (
     <>
@@ -43,7 +46,9 @@ export const AppActions = () => {
           <ToolbarButton
             icon={<ArrowImportRegular />}
             onClick={() => {
-              loadRomajiTableFromFile()
+              loadRomajiTableFromFile({
+                setDocument,
+              })
             }}
           >
             ファイルから読み込み...
