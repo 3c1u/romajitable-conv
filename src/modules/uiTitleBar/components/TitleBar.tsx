@@ -114,7 +114,6 @@ export const TitleBar = () => {
           } hover:bg-white/20 transition focus:outline-none`}
           onClick={handleMaximize}
         >
-          {' '}
           {isMaximized ? (
             <SquareMultipleRegular
               aria-label="Maximize the window"
