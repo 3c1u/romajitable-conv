@@ -1,2 +1,1 @@
-import dialog from '@tauri-apps/api/dialog'
-export default dialog
+export * as dialog from '@tauri-apps/api/dialog'
