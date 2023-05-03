@@ -49,8 +49,21 @@ export const TitleBar = () => {
 
   return (
     <div className="flex" onDoubleClick={handleMaximize}>
-      <div data-tauri-drag-region className="px-4 py-2 text-xs">
-        romajitable-conv
+      <div
+        data-tauri-drag-region
+        className="px-2 py-3 text-xs flex items-center gap-2"
+      >
+        <img
+          src="/dodoco.webp"
+          width="16"
+          height="16"
+          className="object-fit shrink-0 w-4 h-4 block"
+          onDoubleClick={e => {
+            e.stopPropagation()
+            handleClose()
+          }}
+        />
+        <span data-tauri-drag-region>Romaji Table Converter</span>
       </div>
       <div data-tauri-drag-region className="flex-1" />
       <div className="flex">
@@ -73,7 +86,7 @@ export const TitleBar = () => {
             viewBox="0 0 16 16"
             fill="currentColor"
           >
-            <rect width="12" height="1" x="2" y="8" />
+            <rect width="10" height="1" x="3" y="8" />
           </svg>
         </button>
         <button

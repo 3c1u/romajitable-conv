@@ -15,6 +15,7 @@ body {
 }
 
 button,
+[role='button'],
 a[href] {
   cursor: default;
 }
@@ -28,4 +29,8 @@ iframe,
 embed,
 object {
   vertical-align: unset;
+}
+
+img {
+  -webkit-user-drag: none;
 }

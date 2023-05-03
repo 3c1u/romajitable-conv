@@ -49,8 +49,8 @@
         "title": "Romaji Table Converter",
         "decorations": false,
         "width": 500,
-        "height": 400,
-        "minWidth": 300
+        "height": 600,
+        "minWidth": 500
       }
     ]
   }
