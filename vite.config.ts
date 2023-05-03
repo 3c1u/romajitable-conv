@@ -38,6 +38,8 @@ export default defineConfig(async () => ({
   resolve: {
     alias: {
       '~/': `${__dirname}/src/`,
+      'buffer': 'buffer',
+      'string_decoder': 'string_decoder',
     },
   },
 }))

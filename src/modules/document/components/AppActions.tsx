@@ -18,6 +18,7 @@ import {
   DeleteRegular,
 } from '@fluentui/react-icons'
 import { useState } from 'react'
+import { loadRomajiTableFromFile } from '~/modules/document/actions/loadRomajiTable'
 import { RegisterActionDialog } from '~/modules/document/components/RegisterActionDialog'
 import { message } from '~/utils/dialog'
 
@@ -39,7 +40,12 @@ export const AppActions = () => {
           relationship="description"
           positioning="below"
         >
-          <ToolbarButton icon={<ArrowImportRegular />}>
+          <ToolbarButton
+            icon={<ArrowImportRegular />}
+            onClick={() => {
+              loadRomajiTableFromFile()
+            }}
+          >
             ファイルから読み込み...
           </ToolbarButton>
         </Tooltip>
