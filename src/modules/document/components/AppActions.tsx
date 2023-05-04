@@ -19,6 +19,7 @@ import { useAtom } from 'jotai'
 import { useState } from 'react'
 import { loadRomajiTableFromFile } from '~/modules/document/actions/loadRomajiTable'
 import { saveRomajiTableAsAtokFormat } from '~/modules/document/actions/saveRomajiTableAsAtokFormat'
+import { saveRomajiTableAsMozcFormat } from '~/modules/document/actions/saveRomajiTableAsMozcFormat'
 import { saveRomajiTableAsMsImeFormat } from '~/modules/document/actions/saveRomajiTableAsMsImeFormat'
 import { RegisterActionDialog } from '~/modules/document/components/RegisterActionDialog'
 import { documentAtom } from '~/modules/document/stores'
@@ -112,6 +113,17 @@ export const AppActions = () => {
                 }}
               >
                 ATOK用テーブルとして書き出し...
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  if (!document) {
+                    return
+                  }
+
+                  saveRomajiTableAsMozcFormat(document.data)
+                }}
+              >
+                Mozc用テーブルとして書き出し...
               </MenuItem>
             </MenuList>
           </MenuPopover>
